@@ -684,3 +684,49 @@ en mi caso seria
 ```bash
 ssh -i "MyKeyPair.pem" ec2-user@ec2-54-160-98-105.compute-1.amazonaws.com
 ```
+
+![alt text](docs/img/06.png)
+
+List the available instances 
+
+```bash
+aws ec2 describe-instances --filters "Name=instance-type,Values=t2.micro" --query "Reservations[].Instances[].InstanceId"
+```
+
+respuesta
+
+```json
+[
+    "i-0a07f73ff949f1831",
+    "i-0889cdf516330be26",
+    "i-09770df9761550ba5"
+]
+
+```
+
+
+## Final Step: Delete your instance, the security group and the key pair.
+
+To delete a key pair, run the following command, substituting MyKeyPair with the name of the pair to delete. 
+
+```bash
+aws ec2 delete-key-pair --key-name MyKeyPair
+```
+The following command deletes an EC2-VPC security group. 
+
+```bash
+aws ec2 delete-security-group --group-id sg-903004f8
+```
+The following command terminates your instance 
+
+
+```bash
+aws ec2 terminate-instances --instance-ids i-07d0ddb36ea3e65a4 
+```
+ 
+
+
+Congratulations you just learned how to automatically deploy an EC2 instance on AWS.
+
+References:
+https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-welcome.html
